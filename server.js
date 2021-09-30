@@ -7,8 +7,6 @@ const io = new Server(server);
 
 let button_list = [];
 
-
-
 let times_button_been_pressed = 1;
 
 app.get('/', (req, res) => {
@@ -32,27 +30,27 @@ io.on('connection', (socket) => {
         if(socket.username === "1" && times_button_been_pressed % 2 === 1) {
             times_button_been_pressed++;
             console.log("button 1 pressed correctly");
-            socket.emit('is_correctly_pressed', true);
+            io.emit('is_correctly_pressed', true);
         }
         // THIS IS A CASE WHERE WE NEED THE BEEP SOUND
         else if(socket.username === "1" && times_button_been_pressed % 2 != 1) {
             console.log("BEEEEEEEP");
-            socket.emit('is_correctly_pressed', false);
+            io.emit('is_correctly_pressed', false);
         }
         else if(socket.username === "2" && times_button_been_pressed % 2 === 0) {
             console.log("button 2 pressed correctly now its time for button 1");
             times_button_been_pressed++;
-            socket.emit('is_correctly_pressed', true);
+            io.emit('is_correctly_pressed', true);
         }
         // OTHER CASE WHERE WE NEED THE BEEP
         else if(socket.username === "2" && times_button_been_pressed % 2 != 0) {
             console.log("BEEEEEEEP");
-            socket.emit('is_correctly_pressed', false);
+            io.emit('is_correctly_pressed', false);
         }
         // SOME OTHER CASE THAT CAN BREAK THE PROGRAM?
         else {
             console.log("BEEEEEEEP");
-            socket.emit('is_correctly_pressed', false);
+            io.emit('is_correctly_pressed', false);
         }
     })
 });

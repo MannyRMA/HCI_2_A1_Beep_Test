@@ -2,32 +2,54 @@
 <html>
 <head>
     <title>Beep Test</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <button id="button">Send</button>
+    <button 
+        id="button"
+        style=
+            "background-color: forestgreen;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;"
+        > 
+        Send 
+    </button>
     <span id="test"></span>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    let socket = io();
-    let beep = new Audio("https://www.soundjay.com/buttons/sounds/beep-02.mp3");
-    let check = new Audio("https://www.soundjay.com/buttons/sounds/button-37a.mp3");
+    const socket = io();
+    const beep = new Audio("https://www.soundjay.com/buttons/sounds/beep-02.mp3");
+    const check = new Audio("https://www.soundjay.com/buttons/sounds/button-37a.mp3");
 
-    let button = document.getElementById('button');
+    const button = document.getElementById('button');
+    let clicked = false;
 
     button.addEventListener('click', function(e) {
         e.preventDefault();
         socket.emit('click', true);
-        socket.on("is_correctly_pressed", function(args) {
+        clicked = true;
+    })
+
+    socket.on("is_correctly_pressed", function(args) {
             console.log(args);
             if(args === false) {
                 beep.play();
             }
             else {
                 check.play();
+
+                // Switch Colour
+                if (button.style.backgroundColor === "red"){
+                    button.style.backgroundColor = "forestgreen";
+                } else if (clicked){
+                    button.style.backgroundColor = "red";
+                }
             }
         })
-    })
 </script>
 </body>
 </html>
