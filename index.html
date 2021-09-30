@@ -2,22 +2,30 @@
 <html>
 <head>
     <title>Beep Test</title>
+    <style>
+        #button {
+            background-color: forestgreen;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            top: 10%;
+            left: 10%;
+            position:absolute;
+            box-shadow: 0 5px #707070;
+            font-size: 70px;
+            width: 80vw;
+            height: 80vh;
+        }
+        #button:active {
+            box-shadow: 0 2px #545454;
+            transform: translateY(4px);
+        }
+    </style>
 </head>
 <body>
     <button 
-        id="button"
-        style=
-            "background-color: forestgreen;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;"
-        > 
-        Send 
-    </button>
+        id="button">10</button>
     <span id="test"></span>
 <script src="/socket.io/socket.io.js"></script>
 <script>
