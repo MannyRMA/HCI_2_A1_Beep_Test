@@ -36,6 +36,7 @@
 
     let button = document.getElementById('button');
     let clicked = false;
+    let timesButtonClicked = 0;
 
     button.addEventListener('click', function(e) {
         e.preventDefault();
@@ -50,17 +51,18 @@
             }
             else {
                 check.play();
-                let timeleft = 10;
-                let downloadTimer = setInterval(function(){
-                    if(timeleft <= 0){
+                let countdown = 10 - timesButtonClicked;
+                timesButtonClicked += 1;
+                let timer = setInterval(function(){
+                    if(countdown <= 0){
                         beep.play();
-                        clearInterval(downloadTimer);
+                        clearInterval(timer);
                     }
                     socket.on("is_correctly_pressed", function(args) {
-                        clearInterval(downloadTimer);
+                        clearInterval(timer);
                     })
-                    button.innerText = timeleft;
-                    timeleft -= 1;
+                    button.innerText = countdown;
+                    countdown -= 1;
                 }, 1000);
 
                 // Switch Colour
