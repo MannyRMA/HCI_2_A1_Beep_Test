@@ -30,8 +30,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     const socket = io();
-    const beep = new Audio("https://www.soundjay.com/buttons/sounds/beep-02.mp3");
-    const check = new Audio("https://www.soundjay.com/buttons/sounds/button-37a.mp3");
+    const beep = new Audio("https://freesound.org/data/previews/216/216090_3450800-lq.mp3");
+    const check = new Audio("https://freesound.org/data/previews/546/546081_7862587-lq.mp3");
+    const gameOver = new Audio("https://freesound.org/data/previews/76/76376_877451-lq.mp3");
 
     let button = document.getElementById('button');
     let clicked = false;
@@ -49,13 +50,15 @@
             }
             else {
                 check.play();
-
                 let timeleft = 10;
                 let downloadTimer = setInterval(function(){
                     if(timeleft <= 0){
                         beep.play();
                         clearInterval(downloadTimer);
                     }
+                    socket.on("is_correctly_pressed", function(args) {
+                        clearInterval(downloadTimer);
+                    })
                     button.innerText = timeleft;
                     timeleft -= 1;
                 }, 1000);
