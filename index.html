@@ -33,7 +33,7 @@
     const beep = new Audio("https://www.soundjay.com/buttons/sounds/beep-02.mp3");
     const check = new Audio("https://www.soundjay.com/buttons/sounds/button-37a.mp3");
 
-    const button = document.getElementById('button');
+    let button = document.getElementById('button');
     let clicked = false;
 
     button.addEventListener('click', function(e) {
@@ -49,6 +49,16 @@
             }
             else {
                 check.play();
+
+                let timeleft = 10;
+                let downloadTimer = setInterval(function(){
+                    if(timeleft <= 0){
+                        beep.play();
+                        clearInterval(downloadTimer);
+                    }
+                    button.innerText = timeleft;
+                    timeleft -= 1;
+                }, 1000);
 
                 // Switch Colour
                 if (button.style.backgroundColor === "red"){
